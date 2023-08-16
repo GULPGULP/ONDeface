@@ -166,6 +166,13 @@ def crawl_and_deface_links():
 
 def ddos():
     try:
+        import os
+        import sys
+        import urllib.request
+        import urllib.error
+        import threading
+        import random
+        
         os.system("clear" if sys.platform == "linux" or sys.platform == "linux2" else "cls")
 
         print("\033[1;32m")
