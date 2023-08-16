@@ -137,19 +137,21 @@ def deface_single_site():
 
 def crawl_and_deface_links():
     try:
-        a = x(f"Entrez votre fichier .html de déface: ")
+        a = x(f"Enter the path of your .html defacement file: ")
         if not os.path.isfile(a):
-            print("Fichier '%s' introuvable" % a)
+            print("File '%s' not found" % a)
             return
-        
-        with open(a, 'r') as links_file:
-            links = links_file.readlines()
 
-        deface_file = x(f"Entrez le chemin vers le fichier .html de déface: ")
-        
-        for link in links:
-            target_url = link.strip()  # Remove leading/trailing spaces and newlines
-            crawl_and_deface(target_url, deface_file)
+        link_file = x(f"Enter the path of the .txt file containing URLs: ")
+        if not os.path.isfile(link_file):
+            print("File '%s' not found" % link_file)
+            return
+
+        with open(link_file, 'r') as f:
+            target_urls = f.read().splitlines()
+
+        for target_url in target_urls:
+            crawl_and_deface(target_url, a)
     except KeyboardInterrupt:
         print()
 
