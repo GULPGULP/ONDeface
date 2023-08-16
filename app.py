@@ -141,8 +141,15 @@ def crawl_and_deface_links():
         if not os.path.isfile(a):
             print("Fichier '%s' introuvable" % a)
             return
-        target_url = x(f"Entrez l'URL du site cible: ")
-        crawl_and_deface(target_url, a)
+        
+        with open(a, 'r') as links_file:
+            links = links_file.readlines()
+
+        deface_file = x(f"Entrez le chemin vers le fichier .html de déface: ")
+        
+        for link in links:
+            target_url = link.strip()  # Remove leading/trailing spaces and newlines
+            crawl_and_deface(target_url, deface_file)
     except KeyboardInterrupt:
         print()
 
