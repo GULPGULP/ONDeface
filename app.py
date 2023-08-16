@@ -57,7 +57,9 @@ banner = """
 
     [⍟] Discord: https://discord.gg/teHyE9Tgq7\t
    
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"""
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+"""
 
 b = '\033[31m'
 h = '\033[32m'
@@ -109,7 +111,7 @@ def main(__bn__):
     print(__bn__)
     while True:
         try:
-            choice = x("\033[33mChoisissez une option:\n1. Défacer un seul site\n2. Crawler et défacer les liens d'un site\n3. Quitter\n")
+            choice = x("Choisissez une option:\n1. Défacer un seul site\n2. Crawler et défacer les liens d'un site\n3. Quitter\n")
             if choice == "1":
                 deface_single_site()
             elif choice == "2":
@@ -124,22 +126,22 @@ def main(__bn__):
 
 def deface_single_site():
     try:
-        a = x(f"\033[33mEntrez votre fichier .html de déface : \t")
+        a = x(f"Entrez votre fichier .html de déface: ")
         if not os.path.isfile(a):
             print("Fichier '%s' introuvable" % a)
             return
-        target_url = x(f"\033[33mEntrez l'URL du site cible : \t")
+        target_url = x(f"Entrez l'URL du site cible: ")
         aox(a, target_url)
     except KeyboardInterrupt:
         print()
 
 def crawl_and_deface_links():
     try:
-        a = x(f"\033[33mEntrez votre fichier .html de déface : \t")
+        a = x(f"Entrez votre fichier .html de déface: ")
         if not os.path.isfile(a):
             print("Fichier '%s' introuvable" % a)
             return
-        target_url = x(f"\033[33mEntrez l'URL du site cible : \t")
+        target_url = x(f"Entrez l'URL du site cible: ")
         crawl_and_deface(target_url, a)
     except KeyboardInterrupt:
         print()
