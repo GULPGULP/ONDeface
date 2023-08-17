@@ -123,7 +123,7 @@ def crawl_and_deface_links_from_file(deface_file, links_file):
         return
 
     for link in links:
-        auto_upload_deface(a, link, interval_ms)
+        auto_upload_deface(deface_file, link, interval_ms)
 
 def main(__bn__):
     print(__bn__)
