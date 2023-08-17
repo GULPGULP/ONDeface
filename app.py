@@ -11,6 +11,8 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import time
 
+interval_ms = 1
+
 try:
     import requests
     import os.path
