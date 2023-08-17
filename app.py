@@ -125,7 +125,7 @@ def crawl_and_deface_links_from_file(deface_file, links_file):
         return
 
     for link in links:
-        auto_upload_deface(deface_file, link, interval_ms)
+        aox(deface_file, link)
 
 def main(__bn__):
     print(__bn__)
@@ -152,7 +152,7 @@ def deface_single_site():
             print("File '%s' not found" % a)
             return
         target_url = x(f"Enter the target site URL: ")
-        aox(a, target_url)
+        auto_upload_deface(a, target_url, interval_ms)
     except KeyboardInterrupt:
         print()
 
