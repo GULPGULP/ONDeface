@@ -150,11 +150,11 @@ def auto_upload(script, target_url):
                 site = "http://" + site
             req = s.put(site + "/" + a, data=op)
             if req.status_code > 200 or req.status_code >= 250:
-                print(m + ">" + b + "[-] FAILED" + b + " %s/%s" % (site, a))
+                print("\033[31m>[-] FAILED %s/%s\033[0m" % (site, a))
             else:
-                print(m + ">" + h + "[+] UPLOADED" + h + " %s/%s" % (site, a))
+                print("\033[32m>[+] UPLOADED %s/%s\033[0m" % (site, a))
         except requests.exceptions.RequestException:
-            print(m + ">" + b + "[-] FAILED" + b + " %s" % target_url)
+            print("\033[31m>[-] FAILED %s\033[0m" % target_url)
 
     except KeyboardInterrupt:
         print()
